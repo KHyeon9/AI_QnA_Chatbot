@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: QnA_Chatbot_Back
+  # postgrsql ??
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ragdb
+    username: raguser
+    password: ragpass
+    driver-class-name: org.postgresql.Driver
+  # jpa ??
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  # ??? ??
+  ai:
+    model:
+      chat: ollama
+      embedding: ollama
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: gemma2:2b
+      embedding:
+        options:
+          model: jeffh/intfloat-multilingual-e5-large-instruct:f16
+    # PGVector ??
+    vectorstore:
+      pgvector:
+        # ?? ??? ??? ??? ??
+        index-type: HNSW # ??? ?? ?? ?? ??? ?? ??? ?? (???)
+        # ???? ???? ?? ? ??? ?? ?? ??
+        distance-type: COSINE_DISTANCE # ?? ?? ?? ?? (???)
+        # ??? ???
+        dimensions: 1024 # ?? ??
+        initialize-schema: true
+        # ??? ?? ??
+        table-name: hotel_vector
